@@ -14,27 +14,27 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/")
+    @GetMapping("/books")
     public ResponseEntity<ArrayList<Book>> getBooks() {
         return bookService.getBooks();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<?> getBook(@PathVariable String id) {
         return bookService.getBook(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("/books")
     public ResponseEntity<?> addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @PutMapping("/")
+    @PutMapping("/books")
     public ResponseEntity<?> updateBook(@RequestBody Book book) {
         return bookService.updateBook(book);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable String id) {
         return bookService.deleteBook(id);
     }
