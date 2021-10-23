@@ -4,7 +4,6 @@ import { Container } from "reactstrap";
 
 import Loading from "./components/Loading";
 import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
@@ -13,10 +12,6 @@ import history from "./utils/history";
 
 // styles
 import "./App.css";
-
-// fontawesome
-import initFontAwesome from "./utils/initFontAwesome";
-initFontAwesome();
 
 const App = () => {
   const { isLoading, error } = useAuth0();
@@ -40,7 +35,6 @@ const App = () => {
             <Route path="/external-api" component={ExternalApi} />
           </Switch>
         </Container>
-        <Footer />
       </div>
     </Router>
   );
