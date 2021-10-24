@@ -6,7 +6,7 @@ import { getConfig } from "../config/config";
 import Loading from "../components/Loading";
 
 export const ExternalApiComponent = () => {
-  const { apiOrigin = "http://localhost:3001", audience } = getConfig();
+  const { apiOrigin = "http://localhost:8080", audience } = getConfig();
 
   const [state, setState] = useState({
     showResult: false,
@@ -54,6 +54,7 @@ export const ExternalApiComponent = () => {
   const callApi = async () => {
     try {
       const token = await getAccessTokenSilently();
+      console.log(token);
 
       const response = await fetch(`${apiOrigin}/api/external`, {
         headers: {
