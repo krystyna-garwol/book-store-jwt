@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "../components/Loading";
+import configJson from "../config/auth_config.json";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -14,6 +15,7 @@ const Books = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState();
+  console.log(token);
 
   const callApi = async () => {
     const JwtToken = await getAccessTokenSilently();
@@ -23,7 +25,7 @@ const Books = () => {
   useEffect(() => {
     callApi();
     axios
-      .get("http://localhost:8080/books")
+      .get(`${configJson.apiOrigin}/books`)
       .then((res) => {
         setBooks(res.data);
       })
@@ -39,7 +41,7 @@ const Books = () => {
     event.preventDefault();
     if (!isEditing) {
       axios
-        .post("http://localhost:8080/books", formData, {
+        .post(`${configJson.apiOrigin}/books`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +58,7 @@ const Books = () => {
         .catch((err) => console.log(err));
     } else {
       axios
-        .put("http://localhost:8080/books", formData, {
+        .put(`${configJson.apiOrigin}/books`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -76,7 +78,7 @@ const Books = () => {
 
   const deleteBook = (id) => {
     axios
-      .delete(`http://localhost:8080/books/${id}`, {
+      .delete(`${configJson.apiOrigin}/books/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,7 +91,7 @@ const Books = () => {
 
   const updateBook = (id) => {
     axios
-      .get(`http://localhost:8080/books/${id}`, {
+      .get(`${configJson.apiOrigin}/books/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

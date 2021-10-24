@@ -15,11 +15,7 @@ import history from "./utils/history";
 import "./css/styles.css";
 
 const App = () => {
-  const { isLoading, error } = useAuth0();
-
-  if (error) {
-    return <div>Oops... {error.message}</div>;
-  }
+  const { isLoading } = useAuth0();
 
   if (isLoading) {
     return <Loading />;

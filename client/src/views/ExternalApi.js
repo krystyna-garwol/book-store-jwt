@@ -1,19 +1,17 @@
 import React from "react";
 import { Button } from "reactstrap";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import { getConfig } from "../config/config";
+import configJson from "../config/auth_config.json";
 import Loading from "../components/Loading";
 
 export const ExternalApiComponent = () => {
-  const { apiOrigin = "http://localhost:8080", audience } = getConfig();
-
   const { getAccessTokenSilently } = useAuth0();
 
   const callApi = async () => {
     const token = await getAccessTokenSilently();
     console.log(token);
 
-    await fetch(`${apiOrigin}/books`, {
+    await fetch(`${configJson.apiOrigin}/books`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,12 +26,7 @@ export const ExternalApiComponent = () => {
           Ping an external API by clicking the button below.
         </p>
 
-        <Button
-          color="primary"
-          className="mt-5"
-          onClick={callApi}
-          disabled={!audience}
-        >
+        <Button color="primary" className="mt-5" onClick={callApi}>
           Ping API
         </Button>
       </div>
