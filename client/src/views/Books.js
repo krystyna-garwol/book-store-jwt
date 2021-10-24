@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "../components/Loading";
 
 const Books = () => {
@@ -12,14 +12,23 @@ const Books = () => {
     releaseDate: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const { getAccessTokenSilently } = useAuth0();
+  const [token, setToken] = useState();
+
+  const callApi = async () => {
+    const JwtToken = await getAccessTokenSilently();
+    setToken(JwtToken);
+  };
 
   useEffect(() => {
+    callApi();
     axios
       .get("http://localhost:8080/books")
       .then((res) => {
         setBooks(res.data);
       })
       .catch((err) => console.log(err));
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (event) => {
@@ -30,7 +39,11 @@ const Books = () => {
     event.preventDefault();
     if (!isEditing) {
       axios
-        .post("http://localhost:8080/books", formData)
+        .post("http://localhost:8080/books", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setBooks(res.data);
           setFormData({
@@ -43,7 +56,11 @@ const Books = () => {
         .catch((err) => console.log(err));
     } else {
       axios
-        .put("http://localhost:8080/books", formData)
+        .put("http://localhost:8080/books", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setBooks(res.data);
           setFormData({
@@ -59,7 +76,11 @@ const Books = () => {
 
   const deleteBook = (id) => {
     axios
-      .delete(`http://localhost:8080/books/${id}`)
+      .delete(`http://localhost:8080/books/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setBooks(res.data);
       })
@@ -68,7 +89,11 @@ const Books = () => {
 
   const updateBook = (id) => {
     axios
-      .get(`http://localhost:8080/books/${id}`)
+      .get(`http://localhost:8080/books/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setFormData({
           id: res.data.id,
