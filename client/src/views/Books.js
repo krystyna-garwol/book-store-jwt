@@ -15,7 +15,7 @@ const Books = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/")
+      .get("http://localhost:8080/books")
       .then((res) => {
         setBooks(res.data);
       })
@@ -30,7 +30,7 @@ const Books = () => {
     event.preventDefault();
     if (!isEditing) {
       axios
-        .post("http://localhost:8080/", formData)
+        .post("http://localhost:8080/books", formData)
         .then((res) => {
           setBooks(res.data);
           setFormData({
@@ -43,7 +43,7 @@ const Books = () => {
         .catch((err) => console.log(err));
     } else {
       axios
-        .put("http://localhost:8080/", formData)
+        .put("http://localhost:8080/books", formData)
         .then((res) => {
           setBooks(res.data);
           setFormData({
@@ -59,7 +59,7 @@ const Books = () => {
 
   const deleteBook = (id) => {
     axios
-      .delete(`http://localhost:8080/${id}`)
+      .delete(`http://localhost:8080/books/${id}`)
       .then((res) => {
         setBooks(res.data);
       })
@@ -68,7 +68,7 @@ const Books = () => {
 
   const updateBook = (id) => {
     axios
-      .get(`http://localhost:8080/${id}`)
+      .get(`http://localhost:8080/books/${id}`)
       .then((res) => {
         setFormData({
           id: res.data.id,
