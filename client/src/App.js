@@ -7,11 +7,12 @@ import NavBar from "./components/NavBar";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
+import Books from "./views/Books";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
 // styles
-import "./App.css";
+import "./styles.css";
 
 const App = () => {
   const { isLoading, error } = useAuth0();
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
+            <Route path="/books" component={Books} />
           </Switch>
         </Container>
       </div>
