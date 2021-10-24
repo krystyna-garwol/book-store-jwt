@@ -4,7 +4,7 @@ import "./css/index.css";
 import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 import history from "./utils/history";
-import { getConfig } from "./configuration";
+import { getConfig } from "./config/config";
 
 const onRedirectCallback = (appState) => {
   history.push(
