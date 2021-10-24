@@ -12,7 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
 // styles
-import "./styles.css";
+import "./css/styles.css";
 
 const App = () => {
   const { isLoading, error } = useAuth0();
