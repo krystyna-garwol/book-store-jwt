@@ -164,44 +164,45 @@ const Books = () => {
 
       <section>
         <h4>Your books</h4>
-        {books.map((book) => {
-          return (
-            <div className="books" key={book.id}>
-              <div className="book">
-                <label>title</label>
-                <p>{book.title}</p>
+        {books &&
+          books.map((book) => {
+            return (
+              <div className="books" key={book.id}>
+                <div className="book">
+                  <label>title</label>
+                  <p>{book.title}</p>
+                </div>
+                <div className="book">
+                  <label>author</label>
+                  <p>{book.author}</p>
+                </div>
+                <div className="book">
+                  <label>rating</label>
+                  <p>{book.rating}</p>
+                </div>
+                <div className="book">
+                  <label>release date</label>
+                  <p>{book.releaseDate}</p>
+                </div>
+                <div className="buttons">
+                  <button
+                    onClick={() => updateBook(book.id)}
+                    className="btn"
+                    id="update-btn"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => deleteBook(book.id)}
+                    className="btn"
+                    id="delete-btn"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-              <div className="book">
-                <label>author</label>
-                <p>{book.author}</p>
-              </div>
-              <div className="book">
-                <label>rating</label>
-                <p>{book.rating}</p>
-              </div>
-              <div className="book">
-                <label>release date</label>
-                <p>{book.releaseDate}</p>
-              </div>
-              <div className="buttons">
-                <button
-                  onClick={() => updateBook(book.id)}
-                  className="btn"
-                  id="update-btn"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => deleteBook(book.id)}
-                  className="btn"
-                  id="delete-btn"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </section>
     </>
   );
