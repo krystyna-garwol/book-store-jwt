@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @CrossOrigin
@@ -16,11 +19,13 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+
     @GetMapping("/books")
-    public ResponseEntity<List<Book>> getBooks() {
-        List<Book> books = bookService.getBooks();
+    public ResponseEntity<List<Book>> getBooks(@RequestHeader("userid") String id) {
+        List<Book> books = bookService.findAllByUserId(id);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
+
 
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBook(@PathVariable String id) {
@@ -49,4 +54,5 @@ public class BookController {
         bookService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

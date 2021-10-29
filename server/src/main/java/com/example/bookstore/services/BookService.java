@@ -42,4 +42,8 @@ public class BookService {
     public Optional<Book> findByTitle(String id) {
         return bookRepository.findById(id);
     }
+
+    public List<Book> findAllByUserId(String userId) {
+        return bookRepository.findAllByUserId(userId);
+    }
 }

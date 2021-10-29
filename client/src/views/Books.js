@@ -11,11 +11,13 @@ const Books = () => {
     author: "",
     rating: "",
     releaseDate: "",
+    userId: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [token, setToken] = useState();
   console.log(token);
+  console.log(user);
 
   const callApi = async () => {
     const JwtToken = await getAccessTokenSilently();
@@ -25,7 +27,11 @@ const Books = () => {
   useEffect(() => {
     callApi();
     axios
-      .get(`${configJson.apiOrigin}/books`)
+      .get(`${configJson.apiOrigin}/books`, {
+        headers: {
+          userId: user.sub,
+        },
+      })
       .then((res) => {
         setBooks(res.data);
       })
@@ -53,6 +59,7 @@ const Books = () => {
             author: "",
             rating: "",
             releaseDate: "",
+            userId: "",
           });
         })
         .catch((err) => console.log(err));
@@ -70,6 +77,7 @@ const Books = () => {
             author: "",
             rating: "",
             releaseDate: "",
+            userId: "",
           });
         })
         .catch((err) => console.log(err));
@@ -103,6 +111,7 @@ const Books = () => {
           author: res.data.author,
           rating: res.data.rating,
           releaseDate: res.data.releaseDate,
+          userId: user.sub,
         });
         setIsEditing(true);
       })
